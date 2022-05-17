@@ -1,6 +1,6 @@
 # _M-RePair_ algorithm
 
-Python extension of the _RePair_ compression scheme from Larsson and Moffat (1999)to multivariate time series. This algorithm is loosely related to the grammar-based compression method _Sequitur_ of Nevill-Manning and Witten (1997). However, because Sequitur processes the message in a left-to-right manner and maintains its two invariants (uniqueness and utility) at all times, it does not necessarily choose as grammar rules the phrases that might eventually lead to the most compact representation.
+Python extension of the _RePair_ compression scheme from Larsson and Moffat (1999) to multivariate time series. This algorithm is loosely related to the grammar-based compression method _Sequitur_ of Nevill-Manning and Witten (1997). However, because Sequitur processes the message in a left-to-right manner and maintains its two invariants (uniqueness and utility) at all times, it does not necessarily choose as grammar rules the phrases that might eventually lead to the most compact representation.
 
 _RePair_ is acombination of a simple but powerful offline phrase derivation method and a compact dictionary encoding. The goal of dictionary-based modeling is to derive a set of phrases in such a way that replacing the occurrences of these phrases in the message with references to the table of phrases decreases the length of the message.
 

@@ -9,18 +9,18 @@ import re
 
 class MRePair:
 
-    def __init__(self, df):
+    def __init__(self, input):
 
         # Raw input
-        self.df = df
+        self.input = input
 
         # Rule construction
         self.symbol = 1
 
         # Run the process
-        self.process(df)
+        self.process(input)
 
-    def process(self, df):
+    def process(self, input):
         """
         Pair replacement mechanism.
 
@@ -28,7 +28,7 @@ class MRePair:
         """
 
         # Initialize phrase instance and inner data structures
-        phrases = self.initialize_data_structures(df)
+        phrases = self.initialize_data_structures(input)
 
         # Initialize output data
         data = {
@@ -62,14 +62,22 @@ class MRePair:
 
         return
 
-    @staticmethod
-    def initialize_data_structures(df):
+    def initialize_data_structures(self, input):
         """
         From the input phrase, builds a hash table that contains
         the occurrences of each digram (position and count).
         """
 
-        return [Phrase(df.loc[:, col]) for col in df.columns[1:]]
+        if isinstance(input, pd.core.frame.DataFrame):
+            self.columns = input.columns[1:]
+            return [Phrase(input.loc[:, col]) for col in input.columns[1:]]
+        elif isinstance(input, dict):
+            self.columns = input.keys()
+            return [Phrase(input[key]) for key in input.keys()]
+        else:
+            raise RuntimeError(
+                'Unexpected data type. Use a DataFrame or a dictionary.'
+            )
 
     @staticmethod
     def most_reccuring_pair(phrases):
@@ -240,7 +248,7 @@ class MRePair:
 
         phrases = pd.concat([
             pd.DataFrame({col: phrase.phrase.split(' ')})
-            for col, phrase in zip(self.df.columns[1:],
+            for col, phrase in zip(self.columns,
                                    self.phrases)
         ], axis=1)
 
